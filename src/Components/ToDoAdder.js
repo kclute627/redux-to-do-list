@@ -1,24 +1,18 @@
 import React, { Component } from 'react';
-import List from './List';
+
 import { connect } from 'react-redux';
-import { addWord } from '../store/taskActions';
+import { addWord, keyGenerator } from '../store/taskActions';
 
 
 class ToDoAdder extends Component {
 
     state = {
         word: '',
-        btn: true
-    }
-
-
-    btnHandler=()=>{
-        if(this.state.word.length > 1){
-            this.setState({btn: false})
-        }
-
         
     }
+
+
+    
 
    
 
@@ -31,25 +25,41 @@ class ToDoAdder extends Component {
         })
     
       }
+      
+    
+
 
     render (){
+       
 
        
+       
         console.log('Local State', this.state.word)
+        console.log('Local State', this.props)
         
+       let key = () =>{
+            return Math.random()*10000;
+        } 
+
+      
 
         return(
             <div className='toDoList'>
-                <input 
-                className = 'inputField'
-                value = {this.state.word}
-                type='text'
-                onChange = {this.currentTaskHandler}></input>
-                
+                <div>
+                    <input 
+                    className = 'inputField'
+                    value = {this.state.word}
+                    type='text'
+                    onChange = {this.currentTaskHandler}></input>
+                </div>
+                <div>
                 <button
-                
+                disabled={this.state.word.length <= 0 ? true : false}
                 className ='btn'
-                onClick={()=>{this.props.addWord(this.state.word); this.setState({word: ''})}}>Add To List</button>
+                onClick={()=>{this.props.addWord(this.state.word, key()); this.setState({word: ''})}}>Add To List</button>
+                </div>
+                
+                
                 
             </div>
         )
@@ -60,7 +70,9 @@ class ToDoAdder extends Component {
 const mapStateToProps = (state)=> {
 
     return{
-        word: state.taskList
+        word: state.taskList,
+        
+        
         
 
     }
@@ -69,7 +81,9 @@ const mapStateToProps = (state)=> {
 const mapDispatchToProps = (dispatch)=>{
 
     return{
-        addWord: (result)=>dispatch(addWord(result))
+        addWord: (result, id)=>dispatch(addWord(result, id)),
+        
+        
 
     }
 }

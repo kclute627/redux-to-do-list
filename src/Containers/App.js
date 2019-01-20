@@ -4,6 +4,7 @@ import ToDoAdder from '../Components/ToDoAdder';
 import List from '../Components/List';
 
 import './App.css';
+import CompletedItems from '../Components/CompletedItems';
 
 class App extends Component {
   render() {
@@ -12,6 +13,8 @@ class App extends Component {
       <Header />
       <ToDoAdder/>
       <List />
+      <CompletedItems/>
+      
        
       </div>
     );
